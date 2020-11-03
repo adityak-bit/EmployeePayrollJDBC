@@ -59,10 +59,16 @@ public class EmployeePayrollService {
 				                  .orElse(null);
 	}
 	
+	public void addEmployeeToPayroll(String name, double basic_pay, LocalDate start, String gender) {
+		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, basic_pay, start, gender));
+	}
+	
 	public boolean checkEmployeePayrollInSyncWithDB(String name) {
 		List<EmployeePayrollData> employeePayrollDataList = employeePayrollDBService.getEmployeePayrollData(name); 
 		return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
 	}
+
+	
 
 	
 
