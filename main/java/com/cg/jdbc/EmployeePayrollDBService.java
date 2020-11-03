@@ -1,6 +1,7 @@
 package com.cg.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -47,6 +48,19 @@ public class EmployeePayrollDBService {
 		}
 		return employeePayrollList;
 	}
+	
+	public List<EmployeePayrollData> readData(LocalDate startDate, LocalDate endDate) {
+		String sql = String.format("SELECT * FROM employee_payroll where start between '%s' and '%s'", Date.valueOf(startDate), Date.valueOf(endDate));
+		List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
+		try (Connection connection = this.getConnection()){
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			employeePayrollList = this.getEmployeePayrollData(resultSet);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return employeePayrollList;
+	}
 
 	public List<EmployeePayrollData> getEmployeePayrollData(String name) {
 		List<EmployeePayrollData> employeePayrollList =  null;
@@ -70,7 +84,8 @@ public class EmployeePayrollDBService {
 				String name = resultSet.getString("name");
 				double basic_pay = resultSet.getDouble("basic_pay");
 				LocalDate start = resultSet.getDate("start").toLocalDate();
-				employeePayrollList.add(new EmployeePayrollData(id, name, basic_pay, start));
+				String gender = resultSet.getString("gender");
+				employeePayrollList.add(new EmployeePayrollData(id, name, basic_pay, start, gender));
 			}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -117,4 +132,6 @@ public class EmployeePayrollDBService {
 			e.printStackTrace();
 		}
 	}
+
+	
 }
