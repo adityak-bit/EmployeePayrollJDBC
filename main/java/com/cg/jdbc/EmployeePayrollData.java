@@ -21,6 +21,7 @@ public class EmployeePayrollData {
 		this(id, name, basic_pay, startDate);
 		this.gender = gender;
 	}
+	
 	@Override
 	public String toString() {
 		return "EmployeePayrollData [id=" + id + ", name=" + name + ", basic_pay=" + basic_pay + ", startDate="
