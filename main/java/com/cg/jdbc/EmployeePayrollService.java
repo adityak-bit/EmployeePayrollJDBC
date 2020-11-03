@@ -1,5 +1,6 @@
 package com.cg.jdbc;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeePayrollService {
@@ -23,6 +24,12 @@ public class EmployeePayrollService {
 		return employeePayrollList;
 	}
 	
+	public List<EmployeePayrollData> readEmployeePayrollData(IOService ioService, LocalDate startDate, LocalDate endDate) {
+		if(ioService.equals(IOService.DB_IO))
+			this.employeePayrollList = employeePayrollDBService.readData(startDate, endDate);
+		return employeePayrollList;
+	}
+	
 	public void updateEmployeeSalary(String name, double basic_pay) {
 		int result = employeePayrollDBService.updateEmployeeData(name, basic_pay);
 		if(result == 0) return;
@@ -41,5 +48,7 @@ public class EmployeePayrollService {
 		List<EmployeePayrollData> employeePayrollDataList = employeePayrollDBService.getEmployeePayrollData(name); 
 		return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
 	}
+
+	
 
 }
