@@ -64,6 +64,23 @@ public class EmployeePayrollDBService {
 		}
 		return avgSalaryMap;
 	}
+	
+	public Map<String, Double> readSumSalaryByGender() {
+		String sql = "SELECT gender, sum(basic_pay) AS sum_salary FROM employee_payroll group by gender ";
+		Map<String, Double> sumSalaryMap = new HashMap<>();
+		try (Connection connection = this.getConnection()){
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			while(resultSet.next()) {
+				String gender = resultSet.getString("gender");
+				double sum_salary = resultSet.getDouble("sum_salary");
+				sumSalaryMap.put(gender, sum_salary);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return sumSalaryMap;
+	}
 
 	List<EmployeePayrollData> getEmployeeDataUsingDB(String sql){
 		List<EmployeePayrollData> employeePayrollList = new ArrayList<>();
@@ -147,6 +164,8 @@ public class EmployeePayrollDBService {
 			e.printStackTrace();
 		}
 	}
+
+	
 
 	
 

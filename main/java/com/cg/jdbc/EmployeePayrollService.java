@@ -9,6 +9,7 @@ public class EmployeePayrollService {
 	public enum IOService {DB_IO;}
 	private List<EmployeePayrollData> employeePayrollList;
 	private Map<String, Double> avgSalaryMap;
+	private Map<String, Double> sumSalaryMap;
 	private EmployeePayrollDBService employeePayrollDBService;
 	
 	public EmployeePayrollService() {
@@ -38,6 +39,12 @@ public class EmployeePayrollService {
 		return avgSalaryMap;
 	}
 	
+	public Map<String, Double> getSumSalaryByGender(IOService ioService) {
+		if(ioService.equals(IOService.DB_IO))
+			this.sumSalaryMap = employeePayrollDBService.readSumSalaryByGender();
+		return sumSalaryMap;
+	}
+	
 	public void updateEmployeeSalary(String name, double basic_pay) {
 		int result = employeePayrollDBService.updateEmployeeData(name, basic_pay);
 		if(result == 0) return;
@@ -56,6 +63,8 @@ public class EmployeePayrollService {
 		List<EmployeePayrollData> employeePayrollDataList = employeePayrollDBService.getEmployeePayrollData(name); 
 		return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
 	}
+
+	
 
 	
 
