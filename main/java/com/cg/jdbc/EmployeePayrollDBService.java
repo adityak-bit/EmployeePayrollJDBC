@@ -9,7 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EmployeePayrollDBService {
 
@@ -44,6 +46,23 @@ public class EmployeePayrollDBService {
 	public List<EmployeePayrollData> readData(LocalDate startDate, LocalDate endDate) {
 		String sql = String.format("SELECT * FROM employee_payroll where start between '%s' and '%s'", Date.valueOf(startDate), Date.valueOf(endDate));
 		return this.getEmployeeDataUsingDB(sql);
+	}
+	
+	public Map<String, Double> readAverageSalaryByGender() {
+		String sql = "SELECT gender, avg(basic_pay) AS avg_salary FROM employee_payroll group by gender ";
+		Map<String, Double> avgSalaryMap = new HashMap<>();
+		try (Connection connection = this.getConnection()){
+			Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(sql);
+			while(resultSet.next()) {
+				String gender = resultSet.getString("gender");
+				double avg_salary = resultSet.getDouble("avg_salary");
+				avgSalaryMap.put(gender, avg_salary);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return avgSalaryMap;
 	}
 
 	List<EmployeePayrollData> getEmployeeDataUsingDB(String sql){
@@ -128,6 +147,8 @@ public class EmployeePayrollDBService {
 			e.printStackTrace();
 		}
 	}
+
+	
 
 	
 }

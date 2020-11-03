@@ -2,6 +2,7 @@ package com.cg.jdbc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,6 +34,13 @@ public class EmployeePayrollServiceTest {
 		LocalDate endDate = LocalDate.now();
 		List<EmployeePayrollData> employeePayrollList = service.readEmployeePayrollData(IOService.DB_IO, startDate, endDate);
 		Assert.assertEquals(3,employeePayrollList.size());
+	}
+
+	@Test
+	public void givenPayrollData_WhenAverageSalaryRetrievedByGender_ShouldReturnProperValue() {
+		EmployeePayrollService service = new EmployeePayrollService();
+		Map<String, Double> avgSalaryMap = service.getAverageSalaryByGender(IOService.DB_IO); 
+		Assert.assertEquals(3000000.00, avgSalaryMap.get("M"), 0.0);
 	}
 	
 }

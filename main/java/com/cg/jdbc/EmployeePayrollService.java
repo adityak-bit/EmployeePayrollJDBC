@@ -2,11 +2,13 @@ package com.cg.jdbc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class EmployeePayrollService {
 
 	public enum IOService {DB_IO;}
 	private List<EmployeePayrollData> employeePayrollList;
+	private Map<String, Double> avgSalaryMap;
 	private EmployeePayrollDBService employeePayrollDBService;
 	
 	public EmployeePayrollService() {
@@ -28,6 +30,12 @@ public class EmployeePayrollService {
 		if(ioService.equals(IOService.DB_IO))
 			this.employeePayrollList = employeePayrollDBService.readData(startDate, endDate);
 		return employeePayrollList;
+	}
+	
+	public Map<String, Double>  getAverageSalaryByGender(IOService ioService) {
+		if(ioService.equals(IOService.DB_IO))
+			this.avgSalaryMap = employeePayrollDBService.readAverageSalaryByGender();
+		return avgSalaryMap;
 	}
 	
 	public void updateEmployeeSalary(String name, double basic_pay) {
