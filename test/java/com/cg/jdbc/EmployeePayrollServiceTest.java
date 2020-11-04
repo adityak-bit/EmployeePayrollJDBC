@@ -78,7 +78,7 @@ public class EmployeePayrollServiceTest {
     	Assert.assertTrue(result);
     }
 	
-	//UC13
+	//UC13/14/15
 	@Test
 	public void given6Employees_WhenAddedToDB_ShouldMatchEmployeeEntries() {
 		EmployeePayrollData[] arrayOfEmps = {
