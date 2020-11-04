@@ -6,26 +6,26 @@ public class EmployeePayrollData {
 
 	int id;
 	String name;
-	double basic_pay;
+	double salary;
 	LocalDate startDate;
 	String gender;
-	public EmployeePayrollData(int id, String name, double basic_pay, LocalDate startDate) {
+	public EmployeePayrollData(int id, String name, double salary, LocalDate startDate) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.basic_pay = basic_pay;
+		this.salary = salary;
 		this.startDate = startDate;
 	}
 	
-	public EmployeePayrollData(int id, String name, double basic_pay, LocalDate startDate,String gender) {
-		this(id, name, basic_pay, startDate);
+	public EmployeePayrollData(int id, String name, double salary, LocalDate startDate,String gender) {
+		this(id, name, salary, startDate);
 		this.gender = gender;
 	}
 	
 
 	@Override
 	public String toString() {
-		return "EmployeePayrollData [id=" + id + ", name=" + name + ", basic_pay=" + basic_pay + ", startDate="
+		return "EmployeePayrollData [id=" + id + ", name=" + name + ", salary=" + salary + ", startDate="
 				+ startDate + "]";
 	}
 	
@@ -38,7 +38,7 @@ public class EmployeePayrollData {
 		if (getClass() != obj.getClass())
 			return false;
 		EmployeePayrollData other = (EmployeePayrollData) obj;
-		if (Double.doubleToLongBits(basic_pay) != Double.doubleToLongBits(other.basic_pay))
+		if (Double.doubleToLongBits(salary) != Double.doubleToLongBits(other.salary))
 			return false;
 		if (id != other.id)
 			return false;

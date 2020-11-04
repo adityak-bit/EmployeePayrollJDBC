@@ -16,7 +16,7 @@ public class EmployeePayrollServiceTest {
 	public void givenEmployeePayrollInDB_WhenRetrieved_ShouldMatchEmployeeCount() {
 		EmployeePayrollService employeePayrollService  =  new EmployeePayrollService();
 		List<EmployeePayrollData> employeePayrollData = employeePayrollService.readEmployeePayrollData(IOService.DB_IO);
-		Assert.assertEquals(7,employeePayrollData.size());
+		Assert.assertEquals(4,employeePayrollData.size());
 	}
 	
 	//UC3
@@ -36,7 +36,7 @@ public class EmployeePayrollServiceTest {
 		LocalDate startDate = LocalDate.of(2018, 01, 01);
 		LocalDate endDate = LocalDate.now();
 		List<EmployeePayrollData> employeePayrollList = service.readEmployeePayrollData(IOService.DB_IO, startDate, endDate);
-		Assert.assertEquals(7,employeePayrollList.size());
+		Assert.assertEquals(4,employeePayrollList.size());
 	}
 
 	//UC6

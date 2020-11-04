@@ -45,11 +45,11 @@ public class EmployeePayrollService {
 		return sumSalaryMap;
 	}
 	
-	public void updateEmployeeSalary(String name, double basic_pay) {
-		int result = employeePayrollDBService.updateEmployeeData(name, basic_pay);
+	public void updateEmployeeSalary(String name, double salary) {
+		int result = employeePayrollDBService.updateEmployeeData(name, salary);
 		if(result == 0) return;
 		EmployeePayrollData employeePayrollData = this.getEmployeePayrollData(name);
-		if(employeePayrollData != null) employeePayrollData.basic_pay = basic_pay;
+		if(employeePayrollData != null) employeePayrollData.salary = salary;
 	}
 	
 	private EmployeePayrollData getEmployeePayrollData(String name) {
@@ -59,8 +59,8 @@ public class EmployeePayrollService {
 				                  .orElse(null);
 	}
 	
-	public void addEmployeeToPayroll(String name, double basic_pay, LocalDate start, String gender) {
-		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, basic_pay, start, gender));
+	public void addEmployeeToPayroll(String name, double salary, LocalDate start, String gender) {
+		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, start, gender));
 	}
 	
 	public boolean checkEmployeePayrollInSyncWithDB(String name) {
