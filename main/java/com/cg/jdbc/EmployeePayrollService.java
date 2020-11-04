@@ -1,6 +1,7 @@
 package com.cg.jdbc;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,30 @@ public class EmployeePayrollService {
 		//System.out.println(this.employeePayrollList);
 	}
 	
+	public void addEmployeesToPayrollUsingThreads(List<EmployeePayrollData> empList) {
+		Map<Integer, Boolean> empAddnStatus = new HashMap<Integer, Boolean>();
+		empList.forEach(employeePayrollData -> {
+			Runnable task = () -> {
+				empAddnStatus.put(employeePayrollData.hashCode(), false);
+				System.out.println("Employee being added: "+Thread.currentThread().getName());
+				this.addEmployeeToPayroll(employeePayrollData.name, employeePayrollData.salary,
+		                                  employeePayrollData.startDate, employeePayrollData.gender);
+				empAddnStatus.put(employeePayrollData.hashCode(), true);
+				System.out.println("Employee added: "+Thread.currentThread().getName());
+			};
+			Thread thread = new Thread(task, employeePayrollData.name);
+			thread.start();
+		});
+		while(empAddnStatus.containsValue(false)) {
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println(empList);
+	}
+	
 	public void addEmployeeToPayroll(String name, double salary, LocalDate start, String gender) {
 		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, start, gender));
 	}
@@ -98,4 +123,6 @@ public class EmployeePayrollService {
 			return(employeePayrollList.size());
 		return 0;
 	}
+
+	
 }

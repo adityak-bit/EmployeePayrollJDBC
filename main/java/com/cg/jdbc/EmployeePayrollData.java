@@ -2,6 +2,7 @@ package com.cg.jdbc;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class EmployeePayrollData {
 
@@ -29,6 +30,10 @@ public class EmployeePayrollData {
 		this.deptList = deptList;
 	}
 	
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, salary, startDate, gender);
+	}
 
 	@Override
 	public String toString() {

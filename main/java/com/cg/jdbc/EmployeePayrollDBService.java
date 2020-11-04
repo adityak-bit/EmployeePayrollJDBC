@@ -243,7 +243,7 @@ public class EmployeePayrollDBService {
 	}
 
 	public void deleteEmployeeData(String name) {
-		String sql = String.format("DELETE FROM emp_payroll WHERE name = '%s'", name);
+		String sql = String.format("DELETE FROM employee_payroll WHERE name = '%s'", name);
 		try(Connection connection = this.getConnection()) {
 			Statement statement = connection.createStatement();
 			statement.executeUpdate(sql);
