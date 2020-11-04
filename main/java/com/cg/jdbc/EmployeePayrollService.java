@@ -70,7 +70,18 @@ public class EmployeePayrollService {
 
 	
 
+	public boolean checkEmployeePayrollAfterDeletion(String name) {
+		for(EmployeePayrollData emp : employeePayrollList) {
+			if(emp.name.equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	
+	public void deleteEmployeeFromPayroll(String name) {
+		employeePayrollDBService.deleteEmployeeData(name);
+	}
 
 	
 
