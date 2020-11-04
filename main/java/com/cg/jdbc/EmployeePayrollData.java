@@ -1,6 +1,7 @@
 package com.cg.jdbc;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public class EmployeePayrollData {
 
@@ -9,6 +10,7 @@ public class EmployeePayrollData {
 	double salary;
 	LocalDate startDate;
 	String gender;
+	List<String> deptList;
 	public EmployeePayrollData(int id, String name, double salary, LocalDate startDate) {
 		super();
 		this.id = id;
@@ -22,13 +24,18 @@ public class EmployeePayrollData {
 		this.gender = gender;
 	}
 	
+	public EmployeePayrollData(int id, String name, double salary, LocalDate startDate,String gender, List<String> deptList) {
+		this(id, name, salary, startDate, gender);
+		this.deptList = deptList;
+	}
+	
 
 	@Override
 	public String toString() {
 		return "EmployeePayrollData [id=" + id + ", name=" + name + ", salary=" + salary + ", startDate="
 				+ startDate + "]";
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -38,7 +45,15 @@ public class EmployeePayrollData {
 		if (getClass() != obj.getClass())
 			return false;
 		EmployeePayrollData other = (EmployeePayrollData) obj;
-		if (Double.doubleToLongBits(salary) != Double.doubleToLongBits(other.salary))
+		if (deptList == null) {
+			if (other.deptList != null)
+				return false;
+		} else if (!deptList.equals(other.deptList))
+			return false;
+		if (gender == null) {
+			if (other.gender != null)
+				return false;
+		} else if (!gender.equals(other.gender))
 			return false;
 		if (id != other.id)
 			return false;
@@ -47,6 +62,8 @@ public class EmployeePayrollData {
 				return false;
 		} else if (!name.equals(other.name))
 			return false;
+		if (Double.doubleToLongBits(salary) != Double.doubleToLongBits(other.salary))
+			return false;
 		if (startDate == null) {
 			if (other.startDate != null)
 				return false;
@@ -54,4 +71,6 @@ public class EmployeePayrollData {
 			return false;
 		return true;
 	}
+	
+	
 }
