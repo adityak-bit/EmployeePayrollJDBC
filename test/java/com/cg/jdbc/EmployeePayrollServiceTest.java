@@ -1,6 +1,9 @@
 package com.cg.jdbc;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +68,7 @@ public class EmployeePayrollServiceTest {
 		Assert.assertTrue(result);
 	}
 	
+	//UC12
 	@Test
     public void givenEmployee_WhenDeleted_ShouldSyncWithDB() {
     	EmployeePayrollService service = new EmployeePayrollService();
@@ -73,4 +77,24 @@ public class EmployeePayrollServiceTest {
     	boolean result = service.checkEmployeePayrollAfterDeletion("Bill");
     	Assert.assertTrue(result);
     }
+	
+	//UC13
+	@Test
+	public void given6Employees_WhenAddedToDB_ShouldMatchEmployeeEntries() {
+		EmployeePayrollData[] arrayOfEmps = {
+				new EmployeePayrollData(0, "A", 100.00, LocalDate.now(), "F"),
+				new EmployeePayrollData(0, "B", 200.00, LocalDate.now(), "M"),
+				new EmployeePayrollData(0, "C", 300.00, LocalDate.now(), "M"),
+				new EmployeePayrollData(0, "D", 100.00, LocalDate.now(), "F"),
+				new EmployeePayrollData(0, "E", 700.00, LocalDate.now(), "F"),
+				new EmployeePayrollData(0, "F", 500.00, LocalDate.now(), "NA"),
+		};
+		EmployeePayrollService service = new EmployeePayrollService();
+		service.readEmployeePayrollData(IOService.DB_IO);
+		Instant start =  Instant.now();
+		service.addEmployeesToPayroll(Arrays.asList(arrayOfEmps));
+		Instant end =  Instant.now();
+		System.out.println("Duration without thread: "+Duration.between(start, end));
+		Assert.assertEquals(8, service.countEntries(IOService.DB_IO));
+	}
 }

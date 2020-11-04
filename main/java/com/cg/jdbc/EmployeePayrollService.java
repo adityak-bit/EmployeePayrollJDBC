@@ -59,6 +59,16 @@ public class EmployeePayrollService {
 				                  .orElse(null);
 	}
 	
+	public void addEmployeesToPayroll(List<EmployeePayrollData> empList) {
+		empList.forEach(employeePayrollData -> {
+		//	System.out.println("Employee being added: "+employeePayrollData.name);
+			this.addEmployeeToPayroll(employeePayrollData.name, employeePayrollData.salary,
+					                  employeePayrollData.startDate, employeePayrollData.gender);
+		//	System.out.println("Employee added: "+employeePayrollData.name);
+		});
+		//System.out.println(this.employeePayrollList);
+	}
+	
 	public void addEmployeeToPayroll(String name, double salary, LocalDate start, String gender) {
 		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, start, gender));
 	}
@@ -83,6 +93,9 @@ public class EmployeePayrollService {
 		employeePayrollDBService.deleteEmployeeData(name);
 	}
 
-	
-
+	public long countEntries(IOService ioService) {
+		if(ioService.equals(IOService.DB_IO))
+			return(employeePayrollList.size());
+		return 0;
+	}
 }
