@@ -95,6 +95,12 @@ public class EmployeePayrollService {
 		System.out.println(empList);
 	}
 	
+	public void addEmployeeToPayroll(EmployeePayrollData data, IOService ioService) {
+		if(ioService.equals(IOService.REST_IO))
+			this.addEmployeeToPayroll(data.name, data.salary, data.startDate, data.gender);
+		else employeePayrollList.add(data);
+	}
+	
 	public void addEmployeeToPayroll(String name, double salary, LocalDate start, String gender) {
 		employeePayrollList.add(employeePayrollDBService.addEmployeeToPayroll(name, salary, start, gender));
 	}
