@@ -1,13 +1,14 @@
 package com.cg.jdbc;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class EmployeePayrollService {
 
-	public enum IOService {DB_IO;}
+	public enum IOService {DB_IO, REST_IO;}
 	private List<EmployeePayrollData> employeePayrollList;
 	private Map<String, Double> avgSalaryMap;
 	private Map<String, Double> sumSalaryMap;
@@ -19,7 +20,7 @@ public class EmployeePayrollService {
 	
 	public EmployeePayrollService(List<EmployeePayrollData> employeePayrollList){
 		this();
-		this.employeePayrollList = employeePayrollList;
+		this.employeePayrollList = new ArrayList<>(employeePayrollList);
 	}
 	
 	public List<EmployeePayrollData> readEmployeePayrollData(IOService ioService) {
@@ -62,12 +63,12 @@ public class EmployeePayrollService {
 	
 	public void addEmployeesToPayroll(List<EmployeePayrollData> empList) {
 		empList.forEach(employeePayrollData -> {
-		//	System.out.println("Employee being added: "+employeePayrollData.name);
+	//	System.out.println("Employee being added: "+employeePayrollData.name);
 			this.addEmployeeToPayroll(employeePayrollData.name, employeePayrollData.salary,
 					                  employeePayrollData.startDate, employeePayrollData.gender);
-		//	System.out.println("Employee added: "+employeePayrollData.name);
+	//	System.out.println("Employee added: "+employeePayrollData.name);
 		});
-		//System.out.println(this.employeePayrollList);
+	//	System.out.println(this.employeePayrollList);
 	}
 	
 	public void addEmployeesToPayrollUsingThreads(List<EmployeePayrollData> empList) {
@@ -103,8 +104,6 @@ public class EmployeePayrollService {
 		return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
 	}
 
-	
-
 	public boolean checkEmployeePayrollAfterDeletion(String name) {
 		for(EmployeePayrollData emp : employeePayrollList) {
 			if(emp.name.equals(name)) {
@@ -119,7 +118,7 @@ public class EmployeePayrollService {
 	}
 
 	public long countEntries(IOService ioService) {
-		if(ioService.equals(IOService.DB_IO))
+		if(ioService.equals(IOService.REST_IO))
 			return(employeePayrollList.size());
 		return 0;
 	}
